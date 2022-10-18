@@ -4,6 +4,7 @@
 
 function showLoginForm($data)
 {
+    //print_r($data);
     $formElements = '';
     foreach ($data['formFields'] as $element) {
         $spn = span($class = 'errSapn', $content = $data[$element]['error']);

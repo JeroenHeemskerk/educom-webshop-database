@@ -13,6 +13,7 @@ include("./presentation/about.php");
 include("./sessionManager/session_manager.php");
 
 
+
 $requested_page = getRequestedPage();
 $data = processRequest($requested_page);
 showResponsePage($data);
@@ -69,6 +70,7 @@ function processRequest($requested_page)
         case 'register':
             $data = validateRegister();
             if ($data['validForm']) {
+                $data=validateLogin();
                 $requested_page = 'login';
             }
             break;
@@ -104,13 +106,13 @@ function showResponsePage($data)
             echo_html_document(array("title" => "about", "script" => "", "style" => "css/stylesheet.css"), showAboutBody());
             break;
         case 'contact':
-            echo_html_document(array("title" => "contact", "script" => "", "style" => "css/stylesheet.css"), ShowContactForm($data));
+            echo_html_document(array("title" => "contact", "script" => "", "style" => "css/stylesheet.css"), generateForm($data));
             break;
         case 'register':
-            echo_html_document(array("title" => "Register", "script" => "", "style" => "css/stylesheet.css"), ShowRegisterForm($data));
+            echo_html_document(array("title" => "Register", "script" => "", "style" => "css/stylesheet.css"), generateForm($data));
             break;
         case 'login':
-            echo_html_document(array("title" => "Log in", "script" => "", "style" => "css/stylesheet.css"), showLoginForm($data));
+            echo_html_document(array("title" => "Log in", "script" => "", "style" => "css/stylesheet.css"), generateForm($data));
             break;
         case 'thinks':
             echo_html_document(array("title" => "Log in", "script" => "", "style" => "css/stylesheet.css"), showContactThinks($data));

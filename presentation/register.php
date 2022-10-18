@@ -1,5 +1,5 @@
 <?php
-
+/*
 function ShowRegisterForm($data)
 {
   $formElements= '';
@@ -19,3 +19,4 @@ function ShowRegisterForm($data)
   return $register;
    
 }
+*/

@@ -1,4 +1,5 @@
 <?php
+/*
 function ShowContactForm($data)
 {
  $formElements = h1('Contact') .  p('vul dit formulier in ') . hr();
@@ -52,3 +53,4 @@ function buildFormElementsFromData($data)
   }
   return  $formElements;
 }
+*/
