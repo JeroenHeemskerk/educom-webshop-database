@@ -24,7 +24,7 @@ function echoHead($head)
 function echo_html_body($pageBody)
 {
   echo showBodyHeader();
-  echo $pageBody;
+  echo div(class: 'content' ,content:  $pageBody);
   showFooter();
 }
 //don
@@ -33,17 +33,17 @@ function showBodyHeader()
 
   $extra_elements_if_user_logged_in = '
   <li class="navElement"><a href="./index.php?page=about"> ABOUT</a></li>
+  <li class="navElement"><a href="./index.php?page=webshop"> WEBSHOP</a></li>
   <li class="navElement"><a href="./index.php?page=logout"> LOGOUT</a></li>';
   $extra_elements_if_user_logged_out = '<li class="navElement"><a href="./index.php?page=register"> REGISTER</a></li>
   <li class="navElement"><a href="./index.php?page=login"> LOGIN</a></li>';
    $extra_elements= is_user_logged_in() ? $extra_elements_if_user_logged_in : $extra_elements_if_user_logged_out;
-  $return_str = '<div class="header">
+  $return_str = '
   <ul class="navLijst">
     <li class="navElement"><a href="./index.php?page=home"> HOME</a></li>
     <li class="navElement"><a href="./index.php?page=contact"> CONTACT</a></li>' .
     $extra_elements .
-    '</ul>
-    </div>';
+    '</ul>';
     echo $return_str;
 
 }

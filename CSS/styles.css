@@ -1,0 +1,265 @@
+/* Cascade Style Sheet for this website */
+.body {
+  min-width: 412px;
+  margin: auto;
+  background-color: white;
+  color: rgb(35, 35, 35);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  padding: 0px;
+  
+}
+* {box-sizing: border-box}
+
+
+
+
+.content {
+  border-style: solid;
+  border-width: 0px 10px;
+  border-color: rgb(76, 75, 75);
+  padding: 10px;
+  margin: 0;
+}
+
+.header {
+  margin-top: 0px;
+  text-align: center;
+  background-color: black;
+}
+.header a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  padding: 14px 16px;
+}
+.header a:hover {
+  background-color: #111;
+}
+
+
+.navLijst {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(76, 75, 75);
+  display: flex;
+  justify-content: space-between;
+  border-color: rgb(64, 39, 39);
+}
+
+.navElement {
+  padding: 5px 10px;
+}
+.contact,.register{
+  margin: auto;
+  width: 70%;
+}
+.login{
+  margin: auto;
+  width: 360px;
+}
+
+
+
+.message {
+  color: blue;
+  text-align: center;
+  margin: 0px;
+}
+
+
+.footer {
+  color: white;
+  background-color: rgb(76, 75, 75);
+  font-size: 10px;
+  margin: 0px;
+}
+
+span {
+  color: red;
+  background-color: #eee;
+}
+
+.gegevensElement {
+  display: flex;
+  font-size: 16px;
+  color: black;;
+}
+.elementBlock{
+  flex: 50%;
+  padding: 10px;
+}
+
+.inputText {
+  width: 100%;
+  padding: 15px;
+  margin: 2px 0 2px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+.inputText:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+.submit {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.submit:hover {
+  opacity:1;
+}
+.BerichtInput{
+  width: 100%;
+  height: 80px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid gray;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  font-size: 16px;
+  resize: none;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+label{
+  display: block;
+  width: 100%;
+  opacity: 0.5;
+}
+form{
+  border:1px solid #ccc;
+}
+
+/***** WEBSHOP********/
+.shoppingPAge{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.productDivShoppingPage {
+  text-decoration: none;
+  width: 310px;
+  border: 1px solid rgb(80, 79, 79);
+  border-radius: 4px;
+  background-color: rgb(215, 246, 247);
+  padding: 2px 5px;
+  margin: 5px;
+
+}
+
+.productImageShoppingPage {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 300px;
+}
+
+.productDivShoppingPage:hover {
+  box-shadow: 0 0 4px 2px rgba(0, 140, 186, 0.5);
+}
+
+.productNameShoppingPage{
+  font-size: medium;
+}
+.productDescriptionShoppingPage {
+  font-size: xx-small;
+  
+}
+.productPriceShoppingPage {
+  font-size: small;
+}
+
+.detailPageProduct{
+  text-decoration: none;
+  width: 75%;
+}
+.detailPageProduct .productImageShoppingPage {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 50%;
+}
+
+.detailPageProduct .productDivShoppingPage:hover {
+  box-shadow: 0 0 4px 2px rgba(0, 140, 186, 0.5);
+}
+
+.detailPageProduct .productNameShoppingPage{
+  font-size: large;
+}
+.detailPageProduct .productDescriptionShoppingPage {
+  font-size: x-small;
+  
+}
+.detailPageProduct .productPriceShoppingPage {
+  font-size: medium;
+}
+
+
+
+
+/*********************** meda ***************/
+
+@media(max-width: 1000px) {
+  .contact,.register{
+    margin: auto;
+    width: 98%;
+  }
+  .login{
+    width: 90%;
+    
+  }
+  *{font-size: 32px;
+  margin: 4px 0px;}
+  input{
+    border: 2px solid gray;
+  }
+  .detailPageProduct{
+    width: 100%;
+  }
+  
+
+}
+

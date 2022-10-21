@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+include("./dataAccessObject/database_repository.php");
 include("./presentation/components.php");
 include("./presentation/layout.php");
 include("./validations/validations.php");
@@ -8,7 +9,8 @@ include("./presentation/thinks.php");
 include("./presentation/home.php");
 include("./presentation/about.php");
 include("./sessionManager/session_manager.php");
-
+include("./presentation/webshop.php");
+include("services/webshopServices.php");
 
 
 $requested_page = getRequestedPage();
@@ -24,6 +26,7 @@ showResponsePage($data);
 
 function getRequestedPage()
 {
+
     $requested_type = $_SERVER['REQUEST_METHOD'];
     if ($requested_type == 'POST') {
         $requested_page = getPostVar('page', 'home');
@@ -44,9 +47,11 @@ function getArrayVar($array, $key, $default = '')
 
 function getUrlVar($key, $default = 'other')
 {
-    $nbrArgs = count(array_keys($_GET));
-    if ($nbrArgs == 0) return 'home';
-    return  $nbrArgs == 1 ? filter_input(INPUT_GET, $key) : $default;
+
+    return filter_input(INPUT_GET, $key);
+    //$nbrArgs = count(array_keys($_GET));
+
+    //return  $nbrArgs == 1 ? filter_input(INPUT_GET, $key) :  $default;
 }
 
 /**
@@ -67,7 +72,7 @@ function processRequest($requested_page)
         case 'register':
             $data = validateRegister();
             if ($data['validForm']) {
-                $data=validateLogin();
+                $data = validateLogin();
                 $requested_page = 'login';
             }
             break;
@@ -80,6 +85,9 @@ function processRequest($requested_page)
         case 'logout':
             do_user_logout();
             $requested_page = 'home';
+            break;
+        case 'detail':
+            $data['productId'] = getUrlVar('id', "");
             break;
     }
     $data['page'] = $requested_page;
@@ -100,7 +108,7 @@ function showResponsePage($data)
             echo_html_document(array("title" => "Home", "script" => "", "style" => "css/stylesheet.css"),  showHomeBody());
             break;
         case 'about':
-            echo_html_document(array("title" => "about", "script" => "", "style" => "css/stylesheet.css"), showAboutBody());
+            echo_html_document(array("title" => "about", "script" => "", "style" => "css/stylesheet.css"), is_user_logged_in() ? showAboutBody() : 'log eerst in ');
             break;
         case 'contact':
             echo_html_document(array("title" => "contact", "script" => "", "style" => "css/stylesheet.css"), generateForm($data));
@@ -113,6 +121,12 @@ function showResponsePage($data)
             break;
         case 'thinks':
             echo_html_document(array("title" => "Log in", "script" => "", "style" => "css/stylesheet.css"), showContactThinks($data));
+            break;
+        case 'webshop':
+            echo_html_document(array("title" => "Log in", "script" => "", "style" => "css/stylesheet.css"), showShoppinPage());
+            break;
+        case 'detail':
+            echo_html_document(array("title" => "Log in", "script" => "", "style" => "css/stylesheet.css"), showDetailPage($data['productId']));
             break;
         default:
             echo $data['page'] . ' URL is niet geldig';

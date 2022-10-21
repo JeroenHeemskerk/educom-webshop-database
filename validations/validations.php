@@ -1,6 +1,6 @@
 
 <?php
-include("./dataAccessObject/database_repository.php");
+
 function validateContact()
 {
     $data = array(
@@ -18,7 +18,7 @@ function validateContact()
         'formButton' => 'sturen'
     );
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') $data=setUpDAtaFromPost($data);
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') $data = setUpDAtaFromPost($data);
     return $data;
 }
 
@@ -46,7 +46,7 @@ function validateRegister()
         'herhaaldWachtwoord' => array('value' => '', 'error' => '', 'htmlElem' => 'input', 'type' => 'password', 'regEx' => isset($_POST['wachtwoord']) ? '/' . $_POST['wachtwoord'] . '$/' : '/.{2,100}/', 'label' => 'Herhaal jouw wachtwoord'),
         'formButton' => 'registreer'
     );
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') $data=setUpDAtaFromPost($data);
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') $data = setUpDAtaFromPost($data);
     if (!$data['validForm']) {
         return $data;
     } else {
@@ -75,8 +75,8 @@ function validateLogin()
         'wachtwoord' => array('value' => '', 'error' => '', 'htmlElem' => 'input', 'type' => 'password', 'regEx' => '/.{2,100}/', 'label' => 'jouw wachtwoord'),
         'formButton' => 'Login'
     );
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') $data=setUpDAtaFromPost($data);
-    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') $data = setUpDAtaFromPost($data);
+
     if ($data['validForm']) {
 
         $user = findUserByEmail($data['email']['value']);

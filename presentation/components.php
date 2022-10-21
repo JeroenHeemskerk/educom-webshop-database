@@ -5,6 +5,7 @@ function input($type = 'text', $id = '', $value = '', $name = '', $class = '', $
 }
 
 
+
 function label($for = '', $id = '', $class = '', $content = '')
 {
 
@@ -16,7 +17,7 @@ function select($id = '', $name = '', $value = '', $class = '', $required = '', 
 array('naam' => 'value'))
 {
     $sel = '<select class="' . $class . '" id="' . $id . '" name="' . $name . '">';
-    
+
     foreach ($options as $option_key => $option_value) {
         $selected = ($value == $option_key ? 'selected' : '');
         $sel .= '<option value="' . $option_key . '" ' . $selected . ' > ' . $option_value . '</option>';
@@ -28,12 +29,12 @@ array('naam' => 'value'))
 
 function textarea($class = '', $id = '', $name = '', $message = '')
 {
-    return '<textarea class="' . $class . '" id="' . $id . '" name="' . $name . '" rows="4" cols="50">' . $message . '</textarea>';
+    return '<textarea class="' . $class . '" id="' . $id . '" name="' . $name . '" >' . $message . '</textarea>';
 }
 
 function div($class = '', $content = '')
 {
-    return '<div  class="' . $class . '">' . $content . '</div>';
+    return '<div  class="' . $class . '" >' . $content . '</div>';
 }
 function h1($content)
 {
@@ -60,6 +61,15 @@ function b($content = '')
 {
     return '<b>' . $content . '</b>';
 }
+function img($src, $class, $alt)
+{
+
+    return '<img src = "' . $src . '" alt="' . $alt . '" class="' . $class . '">';
+}
+function a($href, $content, $class)
+{
+    return '<a href="' . $href . '" class ="' . $class . '" >' . $content . '</a>';
+}
 
 function buildFormElements($data)
 {
@@ -69,39 +79,40 @@ function buildFormElements($data)
         $field = $data[$key];
 
         $spn = span('errSapn', $field['error']);
-        $formElements .= label($key, content: $field['label'] .  ' ' . $spn);
+        $formElement='';
         switch ($field['type']) {
             case 'select':
-                $formElements .= select(name: $key, value: $field['value'], class: 'inputText', required: 'required', options: $field['options']);
+                $formElement .= select(name: $key, value: $field['value'], class: 'inputText', required: 'required', options: $field['options']);
                 break;
             case 'radio':
                 foreach ($field['options'] as $opt => $val) {
                     $optId = $key . '_' . $opt;
                     $rad = input('radio', $optId, value: $opt, name: $key, class: '', content: $val, checked: ($field['value'] == $opt));
-                    $formElements .= label($optId, content: $rad);
+                    $formElement .= label($optId, content: $rad);
                 }
                 break;
             case 'textarea':
-                $formElements .= textarea(class: 'BerichtInput', id: $key, name: $key, message: $field['value']);
+                $formElement .= textarea(class: 'messageArea', id: $key, name: $key, message: $field['value']);
                 break;
             default:
-                $formElements .= input(type: $field['type'], id: $key, value: $field['value'], name: $key, checked: false, class: 'inputText', placeholder: $field['label']);
+                $formElement .= input(type: $field['type'], id: $key, value: $field['value'], name: $key, checked: false, class: 'inputText', placeholder: $field['label']);
                 break;
         }
+        $formElements .=label($key, content: $field['label'] .  ' ' . $spn .$formElement);
     }
     return  $formElements;
 }
 
-function generateForm($data){
-    $formElements= buildFormElements($data) ;
+function generateForm($data)
+{
+    $header = h1($data['formHeader']) . p($data['formDescription']) . hr();
 
-    $container = h1($data['formHeader']). p($data['formDescription']) . hr() .
-    $formElements . 
-    input(type : 'hidden', id : 'page', value : $data['page'], name : 'page') . 
-    div($class = 'clearfix', $content= input(type : 'submit',  value : $data['formButton'],  class : 'submit'));
-  
-    $form=form($id = '', $action = 'index.php', $method = 'POST',div( $class ='container' ,$content =$container));
-    $register = div($class = $data['page'], $content = $form);
-    return $register;
-     
-  }
+    $formElements = buildFormElements($data);
+    $hiddenELement = input(type: 'hidden', id: 'page', value: $data['page'], name: 'page');
+    $submitButton = input(type: 'submit',  value: $data['formButton'],  class: 'submit clearfix');
+
+    $form = form(id : '', action : 'index.php', method : 'POST', content: $formElements . $hiddenELement . $submitButton);
+    $formpage = div($class = $data['page'], $content =$header. $form);
+
+    return $formpage;
+}
