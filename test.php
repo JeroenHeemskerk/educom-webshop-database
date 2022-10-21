@@ -1,72 +1,28 @@
 <?php
 
-function database_connect($servername = "127.0.0.1", $username = "webshopuser", $password = "ZnYuNE6kEG7QHGa", $dbname = "abdel_webshop")
-{
-        $conn = mysqli_connect($servername, $username, $password, $dbname);
-        if (!$conn)  throw new Exception("Connection failed: " . mysqli_connect_error());
-        return $conn;    
+function test(){
+    $cart = array(array('id'=>1, 'nbrOfItems'=>2),array('id'=>2, 'nbrOfItems'=>2),array('id'=>3, 'nbrOfItems'=>2),array('id'=>6, 'nbrOfItems'=>2));
+    print_r(addItemToCart(6,12,$cart));
+    /*
+    $arr=array (1,2,3,4,5);
+    $m=3;
+    print_r(array_map(function($el)use($m){
+        if($el % 2==0)
+        return array('id'=>1, 'nbrOfItems'=>2);
+    },$arr));
+    */
 }
 
-function database_disconnect($conn)
-{
-    mysqli_close($conn);
-}
-
-function saveUser($user)
-{
-    try {
-        echo 'try ... <BR>';
-        $conn = database_connect();
-        $sql = "INSERT INTO users (name, email, password) 
-        VALUE ('" . $user['naam'] . "', '" . $user['email'] . "','" . $user['wachtwoord'] . "')";
-        if (!mysqli_query($conn, $sql)) throw new Exception("user not Found");
-    } catch (Exception $e) {
-        echo "Message : " . $e->getMessage();
-    } finally {
-        database_disconnect($conn);
-    }
-}
-
-function findUserByEmail($email)
-{
-    $conn = database_connect();
-    try {
-        $sql = "SELECT name, email, password FROM users WHERE email='" . $email . "'";
-        $user = mysqli_query($conn, $sql);
-        if(!$user) throw new Exception("user not found" . $sql );
-        if (mysqli_num_rows($user) > 0) {            
-            while ($row = mysqli_fetch_assoc($user)) {
-                print_r($row);
-                return array('naam' => $row["name"], 'email' => $row["email"], 'wachtwoord' => $row["password"]);
-            }
-        } 
-    } finally {
-        database_disconnect($conn);
-    }
-}
-
-function getProducts(){
-    $conn = database_connect();
-    $sql = "SELECT  * FROM products";
-    try{
-        $products = mysqli_query($conn, $sql);
-        if(!$products)throw new Exception("GetProducts failed");
-        return mysqli_fetch_all($products,MYSQLI_ASSOC);
-    }finally{
-        database_disconnect($conn);
-    }
-}
-
-function findProductById($id){
-    $conn = database_connect();
-    try {
-        $sql = "SELECT * FROM products WHERE product_id='" . $id . "'";
-        $result = mysqli_query($conn, $sql);
-        if(!$result) throw new Exception("Error by Function find product by Id : " . mysqli_error($conn) );
-        $products = (mysqli_fetch_all($result,MYSQLI_ASSOC));
-        print_r($products[0]);
-        return sizeof($products)==1 ?  $products[0] : null;
-    } finally {
-        database_disconnect($conn);
-    }
+function addItemToCart($id,$nbrOfItems,$cart){
+    $idExist = false;
+    $result=array_map(
+        function($el)use($id,$nbrOfItems,&$idExist){         
+            if($id == $el['id']){
+                $nbrOfItems+=$el['nbrOfItems'];
+                $idExist = true;
+                return array('id'=>$id, 'nbrOfItems'=>$nbrOfItems+=$el['nbrOfItems']);
+            }else return $el;
+        },$cart);
+    if(!$idExist)array_push($cart,array('id'=> $id, 'nbrOfItems'=>$nbrOfItems));
+    return $result;
 }

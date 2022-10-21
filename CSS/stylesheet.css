@@ -43,6 +43,9 @@
   border-color: rgb(76, 75, 75);
   padding: 10px;
   margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .footer {
   display: flex;
@@ -161,40 +164,53 @@ form{
 .productInShoppingPage:hover {
   box-shadow: 0 0 4px 2px rgba(0, 140, 186, 0.5);
 }
+.name{
+  font-size: 28px;
+  color: blue;
+}
+.description{
+font-size: 18px;
+color: black;
 
-.productInShoppingPage .name{
-  font-size: medium;
 }
-.productInShoppingPage .description {
-  font-size: xx-small;
-  
+.price{
+  color: grey;
+  font-size: 22px;
 }
-.productInShoppingPage .price {
-  font-size: small;
-}
+
 
 .detailPageProduct{
   text-decoration: none;
-  width: 75%;
+  width: 40%;
+  border: 1px solid rgb(80, 79, 79);
+  border-radius: 4px;
+  background-color: rgb(215, 246, 247);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }
 .detailPageProduct img {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
-  width: 50%;
+  width: 40%;
 }
 
 .detailPageProduct .productDivShoppingPage:hover {
   box-shadow: 0 0 4px 2px rgba(0, 140, 186, 0.5);
 }
+.cartButton{
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
 
-.detailPageProduct .name{
-  font-size: large;
-}
-.detailPageProduct .productDescriptionShoppingPage {
-  font-size: x-small;
-  
-}
-.detailPageProduct .productPriceShoppingPage {
-  font-size: medium;
+.cartButton:hover {
+  opacity: 0.7;
 }

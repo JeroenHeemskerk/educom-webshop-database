@@ -50,7 +50,7 @@ function validateRegister()
     if (!$data['validForm']) {
         return $data;
     } else {
-        print_r(findUserByEmail($data['email']['value']));
+        
         if (findUserByEmail($data['email']['value']) != null) {
             $data['email']['error'] = 'probeer ander wachtwoord';
             $data['validForm'] = false;
@@ -112,4 +112,14 @@ function setupData($data, $colnaam, $value = '', $metaData)
         $data[$colnaam]['value'] = $value;
     }
     return $data;
+}
+
+function validateCart(){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        echo "POST ";
+        setUpCartElement($_POST['cart']);
+    }
+    $data= getCartElements();
+    return $data;
+
 }

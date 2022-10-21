@@ -3,7 +3,7 @@
 session_start();
 include("./dataAccessObject/database_repository.php");
 include("./presentation/components.php");
-include("./presentation/layout.php");
+include("./presentation/container.php");
 include("./validations/validations.php");
 include("./presentation/thinks.php");
 include("./presentation/home.php");
@@ -31,7 +31,7 @@ function getRequestedPage()
     if ($requested_type == 'POST') {
         $requested_page = getPostVar('page', 'home');
     } else {
-        $requested_page = getUrlVar('page', 'other');
+        $requested_page = getUrlVar('page', 'home');
     }
     return $requested_page;
 }
@@ -89,6 +89,13 @@ function processRequest($requested_page)
         case 'detail':
             $data['productId'] = getUrlVar('id', "");
             break;
+            case 'cart' :
+            //print_r(getCartElements()); 
+            validateCart();
+            $requested_page = 'detail';
+            $data['productId'] = getUrlVar('id', "");
+            break;
+           
     }
     $data['page'] = $requested_page;
     return $data;
@@ -128,6 +135,7 @@ function showResponsePage($data)
         case 'detail':
             echo_html_document(array("title" => "Log in", "script" => "", "style" => "css/stylesheet.css"), showDetailPage($data['productId']));
             break;
+            
         default:
             echo $data['page'] . ' URL is niet geldig';
     }

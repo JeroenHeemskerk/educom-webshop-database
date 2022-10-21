@@ -36,7 +36,6 @@ function findUserByEmail($email)
         if(!$user) throw new Exception("user not found" . $sql );
         if (mysqli_num_rows($user) > 0) {            
             while ($row = mysqli_fetch_assoc($user)) {
-                print_r($row);
                 return array('naam' => $row["name"], 'email' => $row["email"], 'wachtwoord' => $row["password"]);
             }
         } 
