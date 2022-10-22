@@ -50,7 +50,7 @@ function validateRegister()
     if (!$data['validForm']) {
         return $data;
     } else {
-        
+
         if (findUserByEmail($data['email']['value']) != null) {
             $data['email']['error'] = 'probeer ander wachtwoord';
             $data['validForm'] = false;
@@ -114,12 +114,37 @@ function setupData($data, $colnaam, $value = '', $metaData)
     return $data;
 }
 
-function validateCart(){
+function validateCart()
+{
+    $data = array('page' => 'cart', 'cart' => null, 'productId' => -1);
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        echo "POST ";
-        setUpCartElement($_POST['cart']);
-    }
-    $data= getCartElements();
-    return $data;
+        writInLog($_POST['submit']);
+        switch ($_POST['submit']) {
+            case 'Add':
+                setUpCartElement(id: $_POST['cart']);
+                $data['page'] = 'detail';
 
+                break;
+            case 'Setting':
+
+                foreach ($_POST as $key => $val) {
+
+                    if (is_int($key)) {
+                        echo $key  .  " => " .  $val . "<BR>";
+                        setUpCartElement(id: $key, nbrOfItems: $val);
+                    }
+                }
+                $data['page'] = 'cart';
+                break;
+            case 'Order':
+                $data['page'] = 'cart';
+                break;
+            default:
+                echo "default ";
+        }
+    }
+
+    $data['cart'] = getCartElements();
+    $data['productId'] = isset($_POST['cart']) ? $_POST['cart'] : -1;
+    return $data;
 }

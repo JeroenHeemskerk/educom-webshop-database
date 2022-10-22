@@ -1,6 +1,6 @@
 <?php
 
-
+/*
 function saveUser($user, $filename = "./dataAccessObject/users/users.txt")
 {
     $newUser = array($user['email'], $user['naam'], $user['wachtwoord']);
@@ -10,9 +10,16 @@ function saveUser($user, $filename = "./dataAccessObject/users/users.txt")
     fwrite($usersfile, $fileInput);
     fclose($usersfile);
 }
+*/
+function writInLog($in){
+    $usersfile = fopen("log.txt", "a");
+    fwrite($usersfile, "\n");
+    fwrite($usersfile, $in);
+    fclose($usersfile);
+}
 
 
-
+/*
 function findUserByEmail($email,$filename = "./dataAccessObject/users/users.txt")
 {
     $users = upLoadDataFromFile($filename);
@@ -23,7 +30,7 @@ function findUserByEmail($email,$filename = "./dataAccessObject/users/users.txt"
       }
       return null;
 }
-
+*/
 
 /***************************************************************
  * deze function returnert 
@@ -36,6 +43,7 @@ function findUserByEmail($email,$filename = "./dataAccessObject/users/users.txt"
  * ............
  * ) 
  ***************************************************************/
+/*
 function upLoadDataFromFile($filename)
 {
     $usersfile = fopen($filename, "r");
@@ -62,3 +70,4 @@ function upLoadDataFromFile($filename)
     }
     return $data;
 }
+*/

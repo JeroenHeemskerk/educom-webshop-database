@@ -1,9 +1,9 @@
 <?php
-function input($type = 'text', $id = '', $value = '', $name = '', $class = '', $content = '', $checked = false, $placeholder = '')
+function input($type = 'text', $id = '', $value = '', $name = '', $class = '', $content = '', $checked = false, $placeholder = '' , $min = null, $max = null)
 {
-    return '<input type="' . $type .  '" id="' . $id . '" name="'  . $name . '" class="' . $class . '" value="' . $value . '"  ' .  ($checked  ? 'checked' : '') . ' placeholder="' . $placeholder . '"> ' . $content . '</input>';
+    return '<input type="' . $type. '" ' . ($max != null ? ' max ="' . $max . '" '  : '') . ($min != null ? ' min ="' . $min . '" '  : '' ).  ' id="' . $id . '" name="'  . $name . '" class="' . $class . '" value="' . $value . '"  ' .  ($checked  ? 'checked' : '') . ' placeholder="' . $placeholder . '"> ' . $content . '</input>';
 }
-
+  
 
 
 function label($for = '', $id = '', $class = '', $content = '')
@@ -48,9 +48,9 @@ function hr()
 {
     return '<hr>';
 }
-function form($id = '', $action = '', $method = '', $content)
+function form($id = '', $action = '', $method = '', $content, $class='')
 {
-    return '<form  id="' . $id . '" action="' . $action . '" method="' . $method . '">' .  $content . '</form>';
+    return '<form id="' . $id . '" action="' . $action . '" method="' . $method . '" class="' . $class . '">' .  $content . '</form>';
 }
 function span($class, $content)
 {

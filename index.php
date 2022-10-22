@@ -3,6 +3,7 @@
 session_start();
 include("./dataAccessObject/database_repository.php");
 include("./presentation/components.php");
+include("./presentation/shoppingCart.php");
 include("./presentation/container.php");
 include("./validations/validations.php");
 include("./presentation/thinks.php");
@@ -11,6 +12,7 @@ include("./presentation/about.php");
 include("./sessionManager/session_manager.php");
 include("./presentation/webshop.php");
 include("services/webshopServices.php");
+include("./dataAccessObject/user_repository.php");
 
 
 $requested_page = getRequestedPage();
@@ -48,6 +50,7 @@ function getArrayVar($array, $key, $default = '')
 function getUrlVar($key, $default = 'other')
 {
 
+    if (count(array_keys($_GET)) == 0) return 'home';
     return filter_input(INPUT_GET, $key);
     //$nbrArgs = count(array_keys($_GET));
 
@@ -89,13 +92,10 @@ function processRequest($requested_page)
         case 'detail':
             $data['productId'] = getUrlVar('id', "");
             break;
-            case 'cart' :
-            //print_r(getCartElements()); 
-            validateCart();
-            $requested_page = 'detail';
-            $data['productId'] = getUrlVar('id', "");
+        case 'cart':
+            $data = validateCart();
+            $requested_page = $data['page'];
             break;
-           
     }
     $data['page'] = $requested_page;
     return $data;
@@ -135,7 +135,9 @@ function showResponsePage($data)
         case 'detail':
             echo_html_document(array("title" => "Log in", "script" => "", "style" => "css/stylesheet.css"), showDetailPage($data['productId']));
             break;
-            
+        case 'cart':
+            echo_html_document(array("title" => "Log in", "script" => "", "style" => "css/stylesheet.css"), cart($data['cart']));
+
         default:
             echo $data['page'] . ' URL is niet geldig';
     }

@@ -178,10 +178,13 @@ color: black;
   font-size: 22px;
 }
 
-
+.cartSplit{
+  width: 10px;
+  padding: 0px 20px;
+}
 .detailPageProduct{
   text-decoration: none;
-  width: 40%;
+  width: 60%;
   border: 1px solid rgb(80, 79, 79);
   border-radius: 4px;
   background-color: rgb(215, 246, 247);
@@ -213,4 +216,35 @@ color: black;
 
 .cartButton:hover {
   opacity: 0.7;
+}
+.cart{
+  display: flex;
+  flex-direction: column;
+}
+.cartElement{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+}
+.cartElement img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 2px;
+  width: 40px;
+}
+.cartElement .name{
+  font-size: 12px;
+  width: 200px;
+}
+.cartElement .price{
+  font-size: 14px;
+
+}
+
+.cartNbrOfItems{
+  width: 50px;
+  height: 25px;
+  border: 1px solid #ddd;
+  background: #f1f1f1;
 }
