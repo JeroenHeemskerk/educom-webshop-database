@@ -10,7 +10,7 @@ function showAboutBody()
     <div class="elementBlock">' .  $element . '</div>
     </div>';
   }
-  $return_str = $return_str ;
+  $return_str = div(class: 'about', content:$return_str) ;
 
   return   $return_str;
 }

@@ -16,11 +16,12 @@ function saveUser($user)
 {
     try {
         $conn = database_connect();
+        $name = mysqli_real_escape_string($conn , $user['naam']);
+        $email = mysqli_real_escape_string($conn , $user['email']);
+        $wachtwoord = mysqli_real_escape_string($conn , $user['wachtwoord']);
         $sql = "INSERT INTO users (name, email, password) 
-        VALUE ('" . $user['naam'] . "', '" . $user['email'] . "','" . $user['wachtwoord'] . "')";
+        VALUE ('" . $name . "', '" . $email . "','" . $wachtwoord . "')";
         if (!mysqli_query($conn, $sql)) throw new Exception("user not Found");
-    } catch (Exception $e) {
-        echo "Message : " . $e->getMessage();
     } finally {
         database_disconnect($conn);
     }
@@ -35,10 +36,9 @@ function findUserByEmail($email)
         if (!$user) throw new Exception("user not found" . $sql);
         if (mysqli_num_rows($user) > 0) {
             while ($row = mysqli_fetch_assoc($user)) {
-                return array('id'=> $row["user_id"] ,'naam' => $row["name"], 'email' => $row["email"], 'wachtwoord' => $row["password"]);
+                return array('id' => $row["user_id"], 'naam' => $row["name"], 'email' => $row["email"], 'wachtwoord' => $row["password"]);
             }
         }
-
     } finally {
         database_disconnect($conn);
     }
@@ -82,14 +82,14 @@ function addPaymentToDatabase($user_id, $cartItems, $totalPrice)
 
         $cart_id = mysqli_insert_id($conn);
         foreach ($cartItems as $item) {
-            $sql = "INSERT INTO cart_items (cart_id , nbr_items , product_id)VALUE ('" . $cart_id . "', '" . $item['nbrOfItems'] . "','" . $item['id'] . "')";
+            $nbrOfItems = mysqli_real_escape_string($conn , $item['nbrOfItems']);
+            $sql = "INSERT INTO cart_items (cart_id , nbr_items , product_id)VALUE ('" . $cart_id . "', '" . $nbrOfItems . "','" . $item['id'] . "')";
             if (!mysqli_query($conn, $sql)) throw new Exception("Cart Item Insert ERROR : " . $sql);
         }
 
         $sql = "INSERT INTO payments ( cart_id , total_price , checkout)VALUE ('" . $cart_id . "', '" . $totalPrice . "','" . 0 . "')";
         if (!mysqli_query($conn, $sql)) throw new Exception("Payment can t inserted");
         return mysqli_insert_id($conn);
-
     } finally {
         database_disconnect($conn);
     }

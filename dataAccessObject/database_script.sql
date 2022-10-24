@@ -29,7 +29,7 @@ FOREIGN KEY (cart_id) REFERENCES carts(cart_id),
 FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
-CREATE TABLE payment(
+CREATE TABLE payments(
     payment_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     cart_id int not null,
     total_price double not null,
