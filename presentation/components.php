@@ -106,11 +106,9 @@ function buildFormElements($data)
 function generateForm($data)
 {
     $header = h1($data['formHeader']) . p($data['formDescription']) . hr();
-
     $formElements = buildFormElements($data);
     $hiddenELement = input(type: 'hidden', id: 'page', value: $data['page'], name: 'page');
     $submitButton = input(type: 'submit',  value: $data['formButton'],  class: 'submit clearfix');
-
     $form = form(id : '', action : 'index.php', method : 'POST', content: $formElements . $hiddenELement . $submitButton);
     $formpage = div($class = $data['page'], $content =$header. $form);
 

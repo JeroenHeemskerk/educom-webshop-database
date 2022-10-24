@@ -130,14 +130,24 @@ function validateCart()
                 foreach ($_POST as $key => $val) {
 
                     if (is_int($key)) {
-                        echo $key  .  " => " .  $val . "<BR>";
                         setUpCartElement(id: $key, nbrOfItems: $val);
                     }
                 }
                 $data['page'] = 'cart';
                 break;
             case 'Order':
-                $data['page'] = 'cart';
+                $items = array();
+                foreach ($_POST as $key => $val) {
+
+                    if (is_int($key)) {
+                         array_push($items, array ('id'=> $key , 'nbrOfItems' => $val));
+                    }
+                }
+                $user = get_logged_user();
+                $data['page'] = 'payment';
+                $data['totalPrice'] =  $_POST['totalPrice'];
+                $data['payment'] = addPaymentService($user['id'], $items , $_POST['totalPrice']);
+
                 break;
             default:
                 echo "default ";
@@ -146,5 +156,20 @@ function validateCart()
 
     $data['cart'] = getCartElements();
     $data['productId'] = isset($_POST['cart']) ? $_POST['cart'] : -1;
+    return $data;
+}
+
+
+function validatPayment()
+{
+    $data= null;
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        resetCart();
+        $data['page']= 'home';
+    }else {
+        echo 'payment .....';
+    
+    }
     return $data;
 }

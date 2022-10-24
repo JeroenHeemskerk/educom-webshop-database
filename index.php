@@ -13,6 +13,7 @@ include("./sessionManager/session_manager.php");
 include("./presentation/webshop.php");
 include("services/webshopServices.php");
 include("./dataAccessObject/user_repository.php");
+include("./presentation/payment.php");
 
 
 $requested_page = getRequestedPage();
@@ -96,6 +97,10 @@ function processRequest($requested_page)
             $data = validateCart();
             $requested_page = $data['page'];
             break;
+        case 'payment':
+            $data = validatPayment();
+            $requested_page = $data['page'];
+            break;
     }
     $data['page'] = $requested_page;
     return $data;
@@ -137,6 +142,10 @@ function showResponsePage($data)
             break;
         case 'cart':
             echo_html_document(array("title" => "Log in", "script" => "", "style" => "css/stylesheet.css"), cart($data['cart']));
+            break;
+        case 'payment':
+            echo_html_document(array("title" => "Log in", "script" => "", "style" => "css/stylesheet.css"), payment($data));
+            break;
 
         default:
             echo $data['page'] . ' URL is niet geldig';

@@ -15,6 +15,28 @@ CREATE TABLE products (
     price DECIMAL(10,2)NOT NULL,
     filename varchar(255)NOT NULL
 );
+   CREATE TABLE carts (
+    cart_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id int not null,
+FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+CREATE TABLE cart_items (
+    cart_item_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    cart_id int not null,
+    product_id int not null,
+    nbr_items int,
+FOREIGN KEY (cart_id) REFERENCES carts(cart_id),
+FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+CREATE TABLE payment(
+    payment_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    cart_id int not null,
+    total_price double not null,
+    orderd int,
+FOREIGN KEY (cart_id) REFERENCES carts(cart_id)
+);
+
 
 INSERT INTO `products`( `name`, `description`, `price`, `filename`) VALUES (
     'BLACK+DECKER elektrische grastrimmer BESTA530-CM',
@@ -39,3 +61,5 @@ INSERT INTO `products`( `name`, `description`, `price`, `filename`) VALUES (
     149.00,
     'images/5.jfif'
     );
+
+ 

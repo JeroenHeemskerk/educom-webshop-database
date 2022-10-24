@@ -32,29 +32,36 @@ function get_logged_user()
 function setUpCartElement($id, $nbrOfItems = null)
 {
     $cart = $_SESSION['cart'];
-    $_SESSION['cart'] = addItemToCartArray(id:$id,nbrOfItems: $nbrOfItems,cart: $cart);
+    $_SESSION['cart'] = addItemToCartArray(id: $id, nbrOfItems: $nbrOfItems, cart: $cart);
 }
 
 function getCartElements()
 {
     return $_SESSION['cart'];
 }
+function resetCart(){
+    $_SESSION['cart']=array();
+}
 
 function addItemToCartArray($id, $nbrOfItems, $cart)
 {
 
     $idExist = false;
-
+    $empty=array();
     $result = array_map(
-        function ($el) use ($id, $nbrOfItems, &$idExist) {
+        function ($el) use ($id, $nbrOfItems, &$idExist , &$empty) {
             if ($id == $el['id']) {
                 $idExist = true;
-                $nbr = ($nbrOfItems==null? ($el['nbrOfItems']+1): $nbrOfItems );
-                return array('id' => $id, 'nbrOfItems' => $nbr );
+                $nbr = ($nbrOfItems == null ? $el['nbrOfItems'] + 1 : $nbrOfItems);
+                //echo $key  . '<BR>';
+                return array('id' => $id, 'nbrOfItems' => $nbr);
             } else return $el;
         },
         $cart
     );
-    if (!$idExist) array_push($result, array('id' => $id, 'nbrOfItems' => $nbrOfItems));
+    if (!$idExist) array_push($result, array('id' => $id, 'nbrOfItems' =>  1 ));
+    $result = array_filter($result,function($e){
+        return $e['nbrOfItems']== 0? false : true;
+    });
     return $result;
 }
